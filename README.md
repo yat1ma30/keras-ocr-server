@@ -23,23 +23,11 @@ This will send a POST request to the OCR server and print the JSON response with
 
 ### Using Docker
 
-1. Install Docker if you haven't already.
+```bash
+docker run -d -p 5000:5000 --name ocr yat1ma30/keras-ocr-server
+```
 
-2. Build the Docker image:
-
-    ```bash
-    docker build -t yat1ma30/keras-ocr-server .
-    ```
-
-3. Run the Docker container:
-
-    ```bash
-    docker run -d -p 5000:5000 --name ocr yat1ma30/keras-ocr-server
-    ```
-
-### Using Python
-
-Use Python 3.9-3.11
+### Using Python 3.9-3.11
 
 1. Install the required packages:
 
