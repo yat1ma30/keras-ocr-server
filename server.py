@@ -16,26 +16,15 @@ pipeline = keras_ocr.pipeline.Pipeline()
 @app.route('/ocr', methods=['POST'])
 def ocr_image():
     try:
-        # Receive Base64 encoded image data from the request
-        data = request.json['image']
-
         # Decode Base64 data
-        image_data = base64.b64decode(data)
-
+        image_data = base64.b64decode(request.json['image'])
         # Convert the image to a NumPy array
         nparr = np.frombuffer(image_data, np.uint8)
         image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-
         # Perform OCR on the image using Keras-OCR
-        images = [image]
-        prediction_groups = pipeline.recognize(images)
-
+        prediction_groups = pipeline.recognize([image])
         # Convert the results to JSON
-        results = []
-        for prediction in prediction_groups[0]:
-            text = prediction[0]
-            results.append(text)
-
+        results = [prediction[0] for prediction in prediction_groups[0]]
         return jsonify({'results': results})
     except Exception as e:
         traceback.print_exc()
